@@ -60,6 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/RLicence"
+                android:inputType="number"
                 android:hint="Restaurant Licence Number" />
 
         </android.support.design.widget.TextInputLayout>
@@ -133,7 +134,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/Phone_Number"
-                android:inputType="text"
+                android:inputType="number"
                 android:hint="Phone Number" />
 
         </android.support.design.widget.TextInputLayout>
@@ -160,7 +161,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/password"
-                android:inputType="text"
+                android:inputType="textPassword"
                 android:hint="Password" />
 
         </android.support.design.widget.TextInputLayout>
@@ -174,7 +175,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/repassword"
-                android:inputType="text"
+                android:inputType="textPassword"
                 android:hint="Retype Password" />
 
         </android.support.design.widget.TextInputLayout>
@@ -188,8 +189,6 @@
             />
 
     </LinearLayout>
-
-
 
 
 
