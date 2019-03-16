@@ -11,6 +11,16 @@ public class NGO_model {
     private String govt_ltr_img_url;
     private String joing_ltr_img_ltr;
 
+    public String getUID() {
+        return UID;
+    }
+
+    public void setUID(String UID) {
+        this.UID = UID;
+    }
+
+    private String UID;
+
     public String getNgo_name() {
         return ngo_name;
     }
@@ -69,4 +79,6 @@ public class NGO_model {
 
     private String phone_no;
     private String email;
+
+
 }

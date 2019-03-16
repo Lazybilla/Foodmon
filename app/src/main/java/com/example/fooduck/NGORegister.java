@@ -1,6 +1,7 @@
 package com.example.fooduck;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -15,11 +16,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.model.NGO_model;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -41,11 +47,18 @@ public class NGORegister extends AppCompatActivity {
     private StorageReference mStorageRef;
     private StorageReference riversRef;
     private ArrayList<String> imglist;
+    private FirebaseAuth mAuth;
+    private DatabaseReference mref;
+    private ProgressDialog dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ngoregister);
+
+        mAuth = FirebaseAuth.getInstance();
+        mref = FirebaseDatabase.getInstance().getReference();
 
         // EditText
         mNgoName = (EditText)findViewById(R.id.ngo_name);
@@ -57,6 +70,10 @@ public class NGORegister extends AppCompatActivity {
         mEmail = (EditText)findViewById(R.id.email);
         mPassword = (EditText)findViewById(R.id.password);
         mRepassword = (EditText)findViewById(R.id.retype);
+        dialog = new ProgressDialog(NGORegister.this);
+        dialog.setMessage("Please wait while registering");
+        dialog.setTitle("Please wait");
+        dialog.setCanceledOnTouchOutside(false);
 
         // Button
         mGovDoctButton = (Button)findViewById(R.id.govt_doc_btn);
@@ -105,7 +122,7 @@ public class NGORegister extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+                dialog.show();
                 mName = mNgoName.getText().toString();
                 mID = mNgoID.getText().toString();
                 mPhone = mPhoneNumber.getText().toString();
@@ -139,7 +156,39 @@ public class NGORegister extends AppCompatActivity {
                                 String a = String.valueOf(downloadUri);
 
                                 if (finalI==2){
-                                    Toast.makeText(NGORegister.this, imglist.get(2),Toast.LENGTH_LONG).show();
+
+                                    final NGO_model model = new NGO_model();
+                                    model.setNgo_name(mName);
+                                    model.setNgo_reg(mID);
+                                    model.setPhone_no(mPhone);
+                                    model.setEmail(mMail);
+                                    model.setAadhar_img_url(imglist.get(0));
+                                    model.setGovt_ltr_img_url(imglist.get(1));
+                                    model.setJoing_ltr_img_ltr(imglist.get(2));
+                                    mAuth.createUserWithEmailAndPassword(mMail,mPass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                        @Override
+                                        public void onSuccess(AuthResult authResult) {
+
+                                            String auth = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                            model.setUID(auth);
+                                            mref.child("NGO Info").child(mName).setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+
+                                                    Toast.makeText(NGORegister.this,"sucessfully",Toast.LENGTH_LONG).show();
+                                                    dialog.dismiss();
+                                                    //Intent i = new Intent(NGORegister.this,something.class);
+                                                    //startActivity(i);
+
+                                                }
+                                            });
+
+                                        }
+                                    });
+
+
+
+
                                 }
 
 

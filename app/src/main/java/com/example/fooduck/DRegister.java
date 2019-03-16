@@ -4,19 +4,27 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.model.DonateR;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 
 import java.lang.reflect.MalformedParameterizedTypeException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DRegister extends AppCompatActivity {
 
@@ -25,8 +33,11 @@ public class DRegister extends AppCompatActivity {
     private EditText email,password;
     private FirebaseAuth mAuth;
     private Button register;
-    private EditText mName,mAddress,mDescription,mRailway,mEmail,mPassword,mRetype,mLicense,mWebsite;
-    private String   Name , Address , Description , Railway , Email, Password , Retype ,License , Website ;
+    private EditText mName,mAddress,mDescription,mRailway,mEmail,mPassword,mRetype,mLicense,mWebsite,mPhoneNumber;
+    private String   Name , Address , Description , Railway , Email, Password , Retype ,License , Website ,Phone_no;
+    private DatabaseReference mref;
+    private Spinner spinner;
+
 
 
     @Override
@@ -40,7 +51,6 @@ public class DRegister extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
 
-
         // Define
         mName = (EditText)findViewById(R.id.Rname);
         mAddress = (EditText)findViewById(R.id.address);
@@ -51,22 +61,69 @@ public class DRegister extends AppCompatActivity {
         mRetype = (EditText)findViewById(R.id.retype);
         mWebsite = (EditText)findViewById(R.id.website);
         mLicense = (EditText)findViewById(R.id.RLicence);
+        mPhoneNumber = findViewById(R.id.Phone_Number);
+        spinner = findViewById(R.id.spinner);
 
+        List<String> list = new ArrayList<String>();
+        list.add("Veg");
+        list.add("Non-Veg");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
+        spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+            }
+        });
 
         if (!aSwitch.isChecked()){
-            email = findViewById(R.id.email);
-            password = findViewById(R.id.password);
+
             register = findViewById(R.id.register);
             register.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
+
+                    Name = mName.getText().toString() ;
+                    Address = mAddress.getText().toString();
+                    Description = mDescription.getText().toString();
+                    Railway = mRailway.getText().toString();
+                    Email = mEmail.getText().toString();
+                    Password = mPassword.getText().toString();
+                    Retype = mRetype.getText().toString();
+                    License = mLicense.getText().toString();
+                    Website = mWebsite.getText().toString();
+                    Phone_no = mPhoneNumber.getText().toString();
+
+                    final DonateR donateR = new DonateR();
+                    donateR.setRName(Name);
+                    donateR.setAddr(Address);
+                    donateR.setDesc(Description);
+                    donateR.setN_Railway(Railway);
+                    donateR.setEmail(Email);
+                    donateR.setRlicenc_No(License);
+                    donateR.setWebsite(Website);
+                    donateR.setPhone_no(Phone_no);
+
+
+
+
                     mAuth.createUserWithEmailAndPassword(email.getText().toString(),password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()){
-                                Toast.makeText(DRegister.this,"Successfully",Toast.LENGTH_LONG).show();
+                                String UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                donateR.setUID(UID);
+                                mref.child("Donor Info").child("Restaurant").child(Name).setValue(donateR).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(DRegister.this,"Successfully",Toast.LENGTH_LONG).show();
+
+                                    }
+                                });
+
 
                             }else {
                                 Toast.makeText(DRegister.this,"Not Successfully",Toast.LENGTH_LONG).show();
@@ -77,33 +134,12 @@ public class DRegister extends AppCompatActivity {
                     });
 
 
+
                 }
             });
         }
 
 
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Name = mName.getText().toString() ;
-                Address = mAddress.getText().toString();
-                Description = mDescription.getText().toString();
-                Railway = mRailway.getText().toString();
-                Email = mEmail.getText().toString();
-                Password = mPassword.getText().toString();
-                Retype = mRetype.getText().toString();
-                License = mLicense.getText().toString();
-                Website = mWebsite.getText().toString();
-                Retype = mRetype.getText().toString();
-
-
-
-
-
-
-            }
-        });
 
 
 
