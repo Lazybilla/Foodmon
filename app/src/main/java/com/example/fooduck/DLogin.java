@@ -15,15 +15,13 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 public class DLogin extends AppCompatActivity {
 
-
-
     private EditText mEmail ;
     private EditText mPassword ;
     private Button  mSignIn;
     private String mMail , mPass ;
-    private FirebaseAuth mAuth;
     private TextView dregister;
 
+    private FirebaseAuth firebaseAuth;
 
 
     @Override
@@ -31,12 +29,15 @@ public class DLogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dlogin);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
+
         mEmail = (EditText)findViewById(R.id.dmail);
         mPassword = (EditText)findViewById(R.id.dpassword);
         mSignIn = (Button)findViewById(R.id.dbutton);
         dregister = findViewById(R.id.dregister);
 
-        mAuth = FirebaseAuth.getInstance();
+        //mAuth = FirebaseAuth.getInstance();
 
         dregister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +47,8 @@ public class DLogin extends AppCompatActivity {
             }
         });
 
+
+        //8962
 
 
         mSignIn.setOnClickListener(new View.OnClickListener() {
@@ -58,7 +61,7 @@ public class DLogin extends AppCompatActivity {
 
 
                 if(!mMail.isEmpty() && !mPass.isEmpty()) {
-                    mAuth.signInWithEmailAndPassword(mMail,mPass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    firebaseAuth.signInWithEmailAndPassword(mMail,mPass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                         @Override
                         public void onSuccess(AuthResult authResult) {
 
