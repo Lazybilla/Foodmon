@@ -1,5 +1,6 @@
 package com.example.Adpters;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.fooduck.R;
 import com.example.model.Food;
 
@@ -17,6 +19,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
 
 
     private List<Food> list;
+    private Context context;
 
     public RecyclerviewAdapter(List<Food> list) {
         this.list = list;
@@ -27,14 +30,14 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.food_single,viewGroup,false);
-
+        context = viewGroup.getContext();
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int i) {
 
-        myViewHolder.setAll(list.get(i));
+        myViewHolder.setAll(list.get(i),context);
 
     }
 
@@ -58,11 +61,12 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
             type = view.findViewById(R.id.type);
         }
 
-        private void setAll(Food object){
+        private void setAll(Food object,Context context){
 
             name.setText(object.getFoodname());
             quantity.setText(object.getNo_of_people());
             type.setText(object.getVeg());
+            Glide.with(context).load(object.getImage_url()).into(image);
 
 
         }
