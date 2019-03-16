@@ -1,6 +1,7 @@
 package com.example.fooduck;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,7 +24,8 @@ public class DLogin extends AppCompatActivity {
     private Button  mSignIn;
     private String mMail , mPass ;
     private TextView dregister;
-
+    private SharedPreferences preferences;
+    private String FileName = "Login_Redirect";
     private FirebaseAuth firebaseAuth;
 
 
@@ -39,6 +41,7 @@ public class DLogin extends AppCompatActivity {
         mPassword = (EditText)findViewById(R.id.dpassword);
         mSignIn = (Button)findViewById(R.id.dbutton);
         dregister = findViewById(R.id.dregister);
+
 
         //mAuth = FirebaseAuth.getInstance();
 
@@ -67,6 +70,12 @@ public class DLogin extends AppCompatActivity {
 
                         if (task.isSuccessful()){
                             Toast.makeText(DLogin.this,"Successfully",Toast.LENGTH_LONG).show();
+                            SharedPreferences settings = getSharedPreferences(FileName, MODE_PRIVATE);
+                            SharedPreferences.Editor prefEditor = settings.edit();
+                            prefEditor.putString("Login_Type","Dlogin"); //**syntax error on tokens**
+                            prefEditor.commit();
+                            prefEditor.apply();
+
 
                         }else {
                             Toast.makeText(DLogin.this,"Not Successfully",Toast.LENGTH_LONG).show();

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Fooduck</string>
+    <string name="title_activity_restaurant__finder">Map</string>
 </resources>

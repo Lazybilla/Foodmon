@@ -2,6 +2,7 @@ package com.example.fooduck;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -41,6 +42,8 @@ public class DRegister extends AppCompatActivity {
     private DatabaseReference mref;
     private Spinner spinner;
     private ProgressDialog dialog;
+    private String FileName = "Login_Redirect";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +125,12 @@ public class DRegister extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(DRegister.this,"Successfully",Toast.LENGTH_LONG).show();
+                                        finish();
+                                        SharedPreferences settings = getSharedPreferences(FileName, MODE_PRIVATE);
+                                        SharedPreferences.Editor prefEditor = settings.edit();
+                                        prefEditor.putString("Login_Type","Dlogin"); //**syntax error on tokens**
+                                        prefEditor.commit();
+                                        prefEditor.apply();
                                         finish();
                                         Intent i = new Intent(DRegister.this,DonorActivity.class);
                                         startActivity(i);

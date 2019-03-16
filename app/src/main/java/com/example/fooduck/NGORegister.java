@@ -3,6 +3,7 @@ package com.example.fooduck;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -50,7 +51,7 @@ public class NGORegister extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mref;
     private ProgressDialog dialog;
-
+    private String FileName = "Login_Redirect";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,10 +176,16 @@ public class NGORegister extends AppCompatActivity {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
 
+                                                    SharedPreferences settings = getSharedPreferences(FileName, MODE_PRIVATE);
+                                                    SharedPreferences.Editor prefEditor = settings.edit();
+                                                    prefEditor.putString("Login_Type","NGOLogin"); //**syntax error on tokens**
+                                                    prefEditor.commit();
+                                                    prefEditor.apply();
                                                     Toast.makeText(NGORegister.this,"sucessfully",Toast.LENGTH_LONG).show();
                                                     dialog.dismiss();
-                                                    //Intent i = new Intent(NGORegister.this,something.class);
-                                                    //startActivity(i);
+                                                    finish();
+                                                    Intent i = new Intent(NGORegister.this,Restaurant_Finder.class);
+                                                    startActivity(i);
 
                                                 }
                                             });

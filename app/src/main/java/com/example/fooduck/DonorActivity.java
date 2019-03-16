@@ -47,7 +47,6 @@ import java.util.List;
 
 public class DonorActivity extends AppCompatActivity {
 
-
     private RecyclerView recyclerView;
     private DatabaseReference mref;
     private List<Food> list;
@@ -58,8 +57,7 @@ public class DonorActivity extends AppCompatActivity {
     private  ImageView edtiamge;
     private StorageReference mStorageRef;
     private Uri selectedImage1;
-    private  String type;
-
+    private  String type,UID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +73,9 @@ public class DonorActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         mref = FirebaseDatabase.getInstance().getReference();
         mStorageRef = FirebaseStorage.getInstance().getReference();
+        UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        mref.child("Food").child("Restaurante").addChildEventListener(new ChildEventListener() {
+        mref.child("Food").child("Restaurante").child(UID).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
@@ -183,7 +182,7 @@ public class DonorActivity extends AppCompatActivity {
                                     food.setImage_url(imageUrl);
                                     food.setVeg(type);
 
-                                    mref.child("Food").child("Restaurante").push().setValue(food).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    mref.child("Food").child("Restaurante").child(UID).push().setValue(food).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Toast.makeText(DonorActivity.this,"Sucessfully added",Toast.LENGTH_LONG).show();

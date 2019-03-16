@@ -1,6 +1,7 @@
 package com.example.fooduck;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +25,8 @@ public class NGOLogin extends AppCompatActivity {
     private String mMail , mPass ;
     private FirebaseAuth mAuth;
     private TextView mNgoRegister ;
+    private String FileName = "Login_Redirect";
+
 
 
     @Override
@@ -61,6 +64,12 @@ public class NGOLogin extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
                             if (task.isSuccessful()){
+                                SharedPreferences settings = getSharedPreferences(FileName, MODE_PRIVATE);
+                                SharedPreferences.Editor prefEditor = settings.edit();
+                                prefEditor.putString("Login_Type","NGOLogin"); //**syntax error on tokens**
+                                prefEditor.commit();
+                                prefEditor.apply();
+
                                 Toast.makeText(NGOLogin.this,"Successfully",Toast.LENGTH_LONG).show();
 
                             }else {
