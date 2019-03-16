@@ -1,9 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".NGOLogin">
 
-</android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:text="Sign In"
+        android:textSize="50dp"/>
+
+    <EditText
+        android:id="@+id/ngomail"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="300dp"
+        android:hint="Email" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_marginTop="360dp"
+        android:id="@+id/ngopassword"
+        android:hint="Password"
+        android:layout_height="60dp" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_marginTop="420dp"
+        android:text="Sign In"
+        android:id="@+id/ngobutton"
+        android:layout_height="60dp"
+        android:gravity="center" />
+
+
+
+
+
+
+
+
+
+
+
+</RelativeLayout>
