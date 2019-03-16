@@ -56,8 +56,7 @@ public class NGOLogin extends AppCompatActivity {
                 mPass = mPassword.getText().toString();
 
 
-                if(!mMail.isEmpty() && !mPass.isEmpty())
-                    mAuth.signInWithEmailAndPassword(mMail,mPass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    mAuth.signInWithEmailAndPassword(mEmail.getText().toString(),mPassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
 
