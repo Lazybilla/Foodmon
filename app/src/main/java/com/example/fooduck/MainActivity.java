@@ -1,5 +1,6 @@
 package com.example.fooduck;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
         ngoopen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,NGOLogin.class);
+                startActivity(intent);
 
             }
         });
@@ -29,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
         dopen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this,DLogin.class);
+                startActivity(intent);
+
 
             }
         });
