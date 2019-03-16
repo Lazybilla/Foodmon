@@ -124,7 +124,6 @@ public class DRegister extends AppCompatActivity {
                                     }
                                 });
 
-
                             }else {
                                 Toast.makeText(DRegister.this,"Not Successfully",Toast.LENGTH_LONG).show();
 
