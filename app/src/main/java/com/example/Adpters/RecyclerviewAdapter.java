@@ -68,7 +68,6 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
             type.setText(object.getVeg());
             Glide.with(context).load(object.getImage_url()).into(image);
 
-
         }
 
     }
