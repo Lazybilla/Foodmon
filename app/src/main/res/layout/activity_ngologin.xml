@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NGOLogin">
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".DLogin">
+
+
 
 
     <TextView
@@ -16,25 +20,35 @@
     <EditText
         android:id="@+id/ngomail"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:hint="Email" />
     <EditText
         android:layout_width="match_parent"
-        android:layout_marginTop="360dp"
         android:id="@+id/ngopassword"
+        android:layout_marginTop="10dp"
         android:hint="Password"
-        android:layout_height="60dp" />
+        android:layout_height="wrap_content" />
 
     <Button
         android:layout_width="100dp"
-        android:layout_marginTop="420dp"
         android:text="Sign In"
         android:id="@+id/ngobutton"
-        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
         android:gravity="center" />
 
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"
+        android:textColor="#000"
+        android:id="@+id/ngoregister"
+        android:text="Register here"
+        />
 
 
 
@@ -42,6 +56,4 @@
 
 
 
-
-
-</RelativeLayout>
+</LinearLayout>
