@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "582976417662",
+    "firebase_url": "https://fooduck-831e4.firebaseio.com",
+    "project_id": "fooduck-831e4",
+    "storage_bucket": "fooduck-831e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582976417662:android:efb37d080907d1c4",
+        "android_client_info": {
+          "package_name": "com.example.fooduck"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "582976417662-vumgd6vhct05ivinalojbpd6hn8calvu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fooduck",
+            "certificate_hash": "de48e6c9ba5f659218fe3b6803a6e230f8ac6a18"
+          }
+        },
+        {
+          "client_id": "582976417662-n85orv0h59qvhj7tj9v5ikbeq4u6l04o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdEmfSMgRIJIxj16_42wWyZAOE8yZOZnI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "582976417662-n85orv0h59qvhj7tj9v5ikbeq4u6l04o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
