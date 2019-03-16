@@ -2,17 +2,31 @@ package com.example.fooduck;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class NGORegister extends AppCompatActivity {
 
@@ -23,6 +37,10 @@ public class NGORegister extends AppCompatActivity {
     private EditText mNgoName ,mNgoID, mAadharUri,mGovtDoctUri,mLetterUri,mPhoneNumber,mEmail,mPassword,mRepassword ;
     private Button mGovDoctButton,mAadharButton,mLetterbtn,mRegister;
     private String mName,mID,mPhone,mMail,mPass,mRepass;
+    private ArrayList<Uri> list;
+    private StorageReference mStorageRef;
+    private StorageReference riversRef;
+    private ArrayList<String> imglist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +65,11 @@ public class NGORegister extends AppCompatActivity {
 
         mRegister = (Button)findViewById(R.id.register);
 
+        list = new ArrayList<>();
+        imglist = new ArrayList<>();
 
+
+        mStorageRef = FirebaseStorage.getInstance().getReference();
 
 
 
@@ -90,6 +112,50 @@ public class NGORegister extends AppCompatActivity {
                 mMail = mEmail.getText().toString();
                 mPass = mPassword.getText().toString();
                 mRepass = mRepassword.getText().toString();
+                for (int i = 0; i<=2; i++){
+
+                    String fileName = getFileName(list.get(i));
+                    final StorageReference fileToUpload = FirebaseStorage.getInstance().getReference().child("Images").child(fileName);
+
+                    UploadTask uploadTask =  fileToUpload.putFile(list.get(i));
+                    final int finalI = i;
+                    Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                        @Override
+                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                            if (!task.isSuccessful()) {
+                                throw task.getException();
+                            }
+
+
+                            // Continue with the task to get the download URL
+                            return fileToUpload.getDownloadUrl();
+                        }
+                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Uri> task) {
+                            if (task.isSuccessful()) {
+                                Uri downloadUri = task.getResult();
+                                imglist.add(String.valueOf(downloadUri));
+                                String a = String.valueOf(downloadUri);
+
+                                if (finalI==2){
+                                    Toast.makeText(NGORegister.this, imglist.get(2),Toast.LENGTH_LONG).show();
+                                }
+
+
+                            } else {
+                                Toast.makeText(NGORegister.this,"Somethng went wrong",Toast.LENGTH_LONG).show();
+                                // Handle failures
+                                // ...
+                            }
+                        }
+                    });
+
+
+
+
+
+                }
 
 
             }
@@ -106,19 +172,47 @@ public class NGORegister extends AppCompatActivity {
         if(requestCode==GET_FROM_GALLERY1 && resultCode == Activity.RESULT_OK) {
             Uri selectedImage1 = data.getData();
             mAadharUri.setText(String.valueOf(selectedImage1));
+            list.add(0,selectedImage1);
 
             }
             if(requestCode==GET_FROM_GALLERY2 && resultCode == Activity.RESULT_OK) {
                 Uri selectedImage2 = data.getData();
                 mGovtDoctUri.setText(String.valueOf(selectedImage2));
-                }
+                list.add(1,selectedImage2);
+
+            }
 
                 if(requestCode==GET_FROM_GALLERY3 && resultCode == Activity.RESULT_OK) {
                     Uri selectedImage3 = data.getData();
                     mLetterUri.setText(String.valueOf(selectedImage3));
-                    }
+                    list.add(2,selectedImage3);
+
+
+                }
 
         }
+
+    public String getFileName(Uri uri) {
+        String result = null;
+        if (uri.getScheme().equals("content")) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            try {
+                if (cursor != null && cursor.moveToFirst()) {
+                    result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        if (result == null) {
+            result = uri.getPath();
+            int cut = result.lastIndexOf('/');
+            if (cut != -1) {
+                result = result.substring(cut + 1);
+            }
+        }
+        return result;
+    }
 
 
 
