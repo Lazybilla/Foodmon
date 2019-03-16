@@ -10,14 +10,11 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class NGOLogin extends AppCompatActivity {
 
-
     private EditText mEmail;
     private EditText mPassword;
     private Button mSignIn;
     private String mMail , mPass ;
     private FirebaseAuth mAuth ;
-
-
 
 
     @Override
