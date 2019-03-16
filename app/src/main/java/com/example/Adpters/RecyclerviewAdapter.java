@@ -63,7 +63,7 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
             name.setText(object.getFoodname());
             quantity.setText(object.getNo_of_people());
             type.setText(object.getVeg());
-            
+
 
         }
 
