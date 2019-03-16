@@ -23,6 +23,9 @@ public class DRegister extends AppCompatActivity {
     private EditText email,password;
     private FirebaseAuth mAuth;
     private Button register;
+    private EditText mName,mAddress,mDescription,mRailway,mEmail,mPassword,mRetype,mLicense,mWebsite;
+    private String   Name , Address , Description , Railway , Email, Password , Retype ,License , Website ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,31 @@ public class DRegister extends AppCompatActivity {
                 }
             });
         }
+
+
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Name = mName.getText().toString() ;
+                Address = mAddress.getText().toString();
+                Description = mDescription.getText().toString();
+                Railway = mRailway.getText().toString();
+                Email = mEmail.getText().toString();
+                Password = mPassword.getText().toString();
+                Retype = mRetype.getText().toString();
+                License = mLicense.getText().toString();
+                Website = mWebsite.getText().toString();
+                Retype = mRetype.getText().toString();
+
+
+
+
+
+            }
+        });
+
+
 
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
