@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.lang.reflect.MalformedParameterizedTypeException;
+
 public class DRegister extends AppCompatActivity {
 
     private Switch aSwitch;
@@ -36,6 +38,21 @@ public class DRegister extends AppCompatActivity {
         restaurant = findViewById(R.id.restaurant);
         individual = findViewById(R.id.individual);
         mAuth = FirebaseAuth.getInstance();
+
+
+
+        // Define
+        mName = (EditText)findViewById(R.id.Rname);
+        mAddress = (EditText)findViewById(R.id.address);
+        mDescription = (EditText)findViewById(R.id.Desc);
+        mRailway = (EditText)findViewById(R.id.station);
+        mEmail = (EditText)findViewById(R.id.email);
+        mPassword = (EditText)findViewById(R.id.password);
+        mRetype = (EditText)findViewById(R.id.retype);
+        mWebsite = (EditText)findViewById(R.id.website);
+        mLicense = (EditText)findViewById(R.id.RLicence);
+
+
 
         if (!aSwitch.isChecked()){
             email = findViewById(R.id.email);
@@ -79,6 +96,7 @@ public class DRegister extends AppCompatActivity {
                 License = mLicense.getText().toString();
                 Website = mWebsite.getText().toString();
                 Retype = mRetype.getText().toString();
+
 
 
 
