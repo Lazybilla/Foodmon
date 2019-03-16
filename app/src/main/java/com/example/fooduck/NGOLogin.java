@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class NGOLogin extends AppCompatActivity {
@@ -27,6 +29,9 @@ public class NGOLogin extends AppCompatActivity {
         mPassword = (EditText)findViewById(R.id.ngopassword);
         mSignIn = (Button)findViewById(R.id.ngobutton);
 
+        mAuth = FirebaseAuth.getInstance();
+
+
 
 
         mSignIn.setOnClickListener(new View.OnClickListener() {
@@ -37,10 +42,24 @@ public class NGOLogin extends AppCompatActivity {
                 mPass = mPassword.getText().toString();
 
 
+                if(!mMail.isEmpty() && !mPass.isEmpty())
+                {
+                    mAuth.signInWithEmailAndPassword(mMail,mPass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
+
+
+
+
+                        }
+                    });
+                }
+
             }
         });
 
-
-
     }
+
+
+
 }

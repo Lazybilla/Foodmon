@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 public class DLogin extends AppCompatActivity {
@@ -16,6 +19,7 @@ public class DLogin extends AppCompatActivity {
     private EditText mPassword ;
     private Button  mSignIn;
     private String mMail , mPass ;
+    private FirebaseAuth mAuth ;
 
 
     @Override
@@ -38,9 +42,24 @@ public class DLogin extends AppCompatActivity {
                 mPass = mPassword.getText().toString();
 
 
+                if(!mMail.isEmpty() && !mPass.isEmpty())
+                {
+
+
+                    mAuth.signInWithEmailAndPassword(mMail,mPass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
 
 
 
+
+
+
+                        }
+                    });
+
+
+                }
 
             }
         });
