@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
     >
 
     <android.support.v7.widget.CardView
@@ -16,29 +18,50 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:orientation="horizontal"
                 android:layout_height="wrap_content">
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
 
 
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Foodname"
                 android:textSize="25dp"
                 android:id="@+id/foodname"
                 android:textStyle="bold"
-                android:padding="10dp"
+                android:textColor="#000"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:text="Veg"
+                    android:text="X 10"
                     android:padding="10dp"
+                    android:layout_gravity="center"
                     android:textSize="20dp"
-                    android:id="@+id/type"
+                    android:layout_toEndOf="@+id/foodname"
+                    android:id="@+id/quantity"
+                    />
 
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/images"
+                    android:id="@+id/type"
+                    android:layout_alignParentEnd="true"
                     />
 
             </RelativeLayout>
@@ -48,20 +71,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:src="@drawable/images"
+                android:scaleType="centerCrop"
                 android:id="@+id/image"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:text="10"
-                android:paddingEnd="20dp"
-                android:textSize="20dp"
-                android:layout_marginTop="10dp"
-                android:id="@+id/quantity"
-                android:layout_marginBottom="10dp"
-                android:textStyle="bold"
                 />
 
         </LinearLayout>

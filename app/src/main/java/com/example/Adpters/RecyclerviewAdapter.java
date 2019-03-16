@@ -49,8 +49,8 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         private View itemview;
-        private TextView name,quantity,type;
-        private ImageView image;
+        private TextView name,quantity;
+        private ImageView image,type;
 
         public MyViewHolder(View view) {
             super(view);
@@ -64,9 +64,18 @@ public class RecyclerviewAdapter extends RecyclerView.Adapter<RecyclerviewAdapte
         private void setAll(Food object,Context context){
 
             name.setText(object.getFoodname());
-            quantity.setText(object.getNo_of_people());
-            type.setText(object.getVeg());
+            quantity.setText("x "+object.getNo_of_people());
             Glide.with(context).load(object.getImage_url()).into(image);
+            if (object.getVeg().equals("Veg")){
+
+                type.setImageResource(R.drawable.vegetariansymbol);
+
+
+            }else {
+                type.setImageResource(R.drawable.nveg);
+
+
+            }
 
         }
 

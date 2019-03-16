@@ -9,10 +9,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button ngoopen,dopen;
+    private FirebaseAuth mAuth;
 
 
     @Override
@@ -20,7 +22,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser()!=null){
+            finish();
+            startActivity(new Intent(MainActivity.this,DonorActivity.class));
+        }
 
 
 
