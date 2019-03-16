@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class NGOLogin extends AppCompatActivity {
 
 
@@ -13,6 +15,8 @@ public class NGOLogin extends AppCompatActivity {
     private EditText mPassword;
     private Button mSignIn;
     private String mMail , mPass ;
+    private FirebaseAuth mAuth ;
+
 
 
 
