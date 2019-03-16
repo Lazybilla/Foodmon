@@ -32,7 +32,7 @@ public class NGOLogin extends AppCompatActivity {
         mPassword = (EditText)findViewById(R.id.ngopassword);
         mSignIn = (Button)findViewById(R.id.ngobutton);
         mNgoRegister = (TextView)findViewById(R.id.ngoregister);
-        //mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
 
         mNgoRegister.setOnClickListener(new View.OnClickListener() {
