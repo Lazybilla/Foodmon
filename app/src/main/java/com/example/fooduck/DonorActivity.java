@@ -1,6 +1,7 @@
 package com.example.fooduck;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,8 +19,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -38,6 +41,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -57,12 +61,18 @@ public class DonorActivity extends AppCompatActivity {
     private  ImageView edtiamge;
     private StorageReference mStorageRef;
     private Uri selectedImage1;
-    private  String type,UID;
+    private String type,UID;
+    private LinearLayout linearLayout;
+    private ProgressDialog progressDialog;
+    private Button accept,decline,view;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_donor);
+
 
         list = new ArrayList<>();
         recyclerView = findViewById(R.id.recyclerview);
@@ -73,7 +83,43 @@ public class DonorActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         mref = FirebaseDatabase.getInstance().getReference();
         mStorageRef = FirebaseStorage.getInstance().getReference();
+        accept = findViewById(R.id.accept);
+        linearLayout = findViewById(R.id.linearlayout);
+        view = findViewById(R.id.view);
+        decline = findViewById(R.id.decline);
         UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        progressDialog = new ProgressDialog(DonorActivity.this);
+        progressDialog.setTitle("Please wait");
+        progressDialog.setMessage("Please wait while uploading your Food");
+        progressDialog.setCanceledOnTouchOutside(false);
+
+        mref.child("Food_Request").child(UID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getChildrenCount()>0){
+                    //final String UIDe = dataSnapshot.child("Request_ID").getValue().toString();
+
+
+                    linearLayout.setVisibility(View.VISIBLE);
+                    view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            //Toast.makeText(DonorActivity.this,UIDe,Toast.LENGTH_LONG).show();
+
+
+                        }
+                    });
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
         mref.child("Food").child("Restaurante").child(UID).addChildEventListener(new ChildEventListener() {
             @Override
@@ -148,10 +194,12 @@ public class DonorActivity extends AppCompatActivity {
 
                     }
                 });
+
                 dialogBuilder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, int which) {
 
+                        progressDialog.show();
                         Toast.makeText(DonorActivity.this,"Save",Toast.LENGTH_LONG).show();
                         name = edtname.getText().toString();
                         quantity = edtquantity.getText().toString();
@@ -186,7 +234,7 @@ public class DonorActivity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Toast.makeText(DonorActivity.this,"Sucessfully added",Toast.LENGTH_LONG).show();
-                                            dialog.dismiss();
+                                            progressDialog.dismiss();
                                         }
                                     });
 
@@ -194,6 +242,7 @@ public class DonorActivity extends AppCompatActivity {
                                 } else {
                                     Toast.makeText(DonorActivity.this,"Somethng went wrong",Toast.LENGTH_LONG).show();
                                     // Handle failures
+                                    progressDialog.dismiss();
                                     // ...
                                 }
                             }
@@ -228,7 +277,6 @@ public class DonorActivity extends AppCompatActivity {
             selectedImage1 = data.getData();
             edtiamge.setImageURI(selectedImage1);
         }
-
 
     }
 

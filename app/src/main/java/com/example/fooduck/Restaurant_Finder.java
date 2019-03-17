@@ -36,6 +36,7 @@ import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -47,6 +48,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Restaurant_Finder extends FragmentActivity implements OnMapReadyCallback {
@@ -110,6 +112,31 @@ public class Restaurant_Finder extends FragmentActivity implements OnMapReadyCal
                             final RecyclerView recyclerView = dialogView.findViewById(R.id.recyclerview);
                             Button address = dialogView.findViewById(R.id.address);
                             final Button call = dialogView.findViewById(R.id.call);
+                            Button request = dialogView.findViewById(R.id.rfood);
+
+                            request.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    DatabaseReference mref = FirebaseDatabase.getInstance().getReference();
+
+                                    HashMap hashMap = new HashMap();
+                                    hashMap.put("Request_ID", FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+                                    mref.child("Food_Request").child(dataSnapshot1.child("uid").getValue().toString()).push().setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+
+                                            Toast.makeText(Restaurant_Finder.this,"Successfully send request",Toast.LENGTH_LONG).show();
+
+                                        }
+                                    });
+
+
+                                }
+                            });
+
+
                             LinearLayoutManager lm =new LinearLayoutManager(Restaurant_Finder.this);
                             recyclerView.setLayoutManager(lm);
 
@@ -165,39 +192,6 @@ public class Restaurant_Finder extends FragmentActivity implements OnMapReadyCal
 
                             final AlertDialog alertDialog = dialogBuilder.create();
                             alertDialog.show();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
                             Toast.makeText(Restaurant_Finder.this,marker.getTitle(),Toast.LENGTH_LONG).show();
