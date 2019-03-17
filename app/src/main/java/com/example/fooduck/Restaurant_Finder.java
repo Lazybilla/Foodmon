@@ -1,26 +1,48 @@
 package com.example.fooduck;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.model.Food;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Restaurant_Finder extends FragmentActivity implements OnMapReadyCallback {
 
@@ -57,13 +79,79 @@ public class Restaurant_Finder extends FragmentActivity implements OnMapReadyCal
                     double lala = Double.valueOf(lal);
                     double longi = Double.valueOf(lon);
 
-                    Toast.makeText(Restaurant_Finder.this,dataSnapshot1.child("lal").getValue().toString(),Toast.LENGTH_LONG).show();
+                    //Toast.makeText(Restaurant_Finder.this,dataSnapshot1.child("lal").getValue().toString(),Toast.LENGTH_LONG).show();
 
 
                     googleMap.addMarker(new MarkerOptions()
                             .position(new LatLng(lala,longi))
-                            .title(dataSnapshot.getKey())
+                            .title(dataSnapshot1.getKey())
                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+
+                    googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                        @Override
+                        public boolean onMarkerClick(Marker marker) {
+
+
+
+
+
+
+
+
+                            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(Restaurant_Finder.this);
+                            LayoutInflater inflater = Restaurant_Finder.this.getLayoutInflater();
+                            View dialogView = inflater.inflate(R.layout.menudialog, null);
+                            dialogBuilder.setView(dialogView);
+
+
+
+
+                            final TextView foodname = dialogView.findViewById(R.id.foodname);
+                            final EditText edtquantity = dialogView.findViewById(R.id.quantity);
+                           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            Toast.makeText(Restaurant_Finder.this,marker.getTitle(),Toast.LENGTH_LONG).show();
+
+                            return false;
+                        }
+                    });
+
                 }
             }
 
