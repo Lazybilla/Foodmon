@@ -24,7 +24,6 @@ public class Restaurant_Finder extends FragmentActivity implements OnMapReadyCal
         mapFragment.getMapAsync(this);
     }
 
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
