@@ -37,10 +37,34 @@ public class Restaurant_Finder extends FragmentActivity implements OnMapReadyCal
         mapFragment.getMapAsync(this);
         mref = FirebaseDatabase.getInstance().getReference();
 
-        mref.child("Doner Info").child("Restaurant").addValueEventListener(new ValueEventListener() {
+
+
+
+    }
+    @Override
+    public void onMapReady(final GoogleMap googleMap) {
+
+
+
+        mref.child("Donor Info").child("Restaurant").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Toast.makeText(Restaurant_Finder.this,dataSnapshot.getValue().toString(),Toast.LENGTH_LONG).show();
+                for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()) {
+                    //Toast.makeText(Restaurant_Finder.this, dataSnapshot1.getKey(), Toast.LENGTH_LONG).show();
+
+                    String lal = dataSnapshot1.child("lal").getValue().toString();
+                    String lon = dataSnapshot1.child("lon").getValue().toString();
+                    double lala = Double.valueOf(lal);
+                    double longi = Double.valueOf(lon);
+
+                    Toast.makeText(Restaurant_Finder.this,dataSnapshot1.child("lal").getValue().toString(),Toast.LENGTH_LONG).show();
+
+
+                    googleMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(lala,longi))
+                            .title(dataSnapshot.getKey())
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                }
             }
 
             @Override
@@ -50,29 +74,22 @@ public class Restaurant_Finder extends FragmentActivity implements OnMapReadyCal
         });
 
 
-
-    }
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-
-
-
-        googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(37.4233438, -122.0728817))
-                .title("LinkedIn")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-
-        googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(37.4629101,-122.2449094))
-                .title("Facebook")
-                .snippet("Facebook HQ: Menlo Park"));
-
-        googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(37.3092293, -122.1136845))
-                .title("Apple"));
-
-
-
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.4233438, -122.0728817), 10));
+     //   googleMap.addMarker(new MarkerOptions()
+     //           .position(new LatLng(37.4233438, -122.0728817))
+     //           .title("LinkedIn")
+     //           .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+//
+     //   googleMap.addMarker(new MarkerOptions()
+     //           .position(new LatLng(37.4629101,-122.2449094))
+     //           .title("Facebook")
+     //           .snippet("Facebook HQ: Menlo Park"));
+//
+     //   googleMap.addMarker(new MarkerOptions()
+     //           .position(new LatLng(37.3092293, -122.1136845))
+     //           .title("Apple"));
+//
+//
+//
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(18.969132, 72.823598), 10));
     }
 }
