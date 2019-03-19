@@ -1,11 +1,21 @@
 package com.example.fooduck;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.location.Criteria;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -24,11 +34,13 @@ import android.widget.Toast;
 
 import com.example.Adpters.RecyclerviewAdapter;
 import com.example.model.Food;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -51,11 +63,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static java.util.Locale.getDefault;
+
 public class Restaurant_Finder extends FragmentActivity implements OnMapReadyCallback {
 
     SupportMapFragment mapFragment;
     private DatabaseReference mref;
     private List<Food> list;
+    LocationManager locationManager;
+    String mprovider;
+    private  GoogleMap googleMapmyLocation;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +88,19 @@ public class Restaurant_Finder extends FragmentActivity implements OnMapReadyCal
         list = new ArrayList<>();
 
 
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+
+
     }
     @Override
     public void onMapReady(final GoogleMap googleMap) {
 
+        this.googleMapmyLocation = googleMap;
+        googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(18.979136, 72.820588))
+                .title("My Location")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 
 
         mref.child("Donor Info").child("Restaurant").addValueEventListener(new ValueEventListener() {
@@ -209,6 +237,17 @@ public class Restaurant_Finder extends FragmentActivity implements OnMapReadyCal
             }
         });
 
+        CircleOptions circleOptions = new CircleOptions();
+        circleOptions.center(new LatLng(18.979136, 72.820588));
+        circleOptions.radius(700);
+        circleOptions.strokeColor(Color.parseColor("#2271cce7"));
+        circleOptions.fillColor(Color.parseColor("#2271cce7"));
+        circleOptions.strokeWidth(6);
+        googleMap.addCircle(circleOptions);
+        //Geocoder geocoder = new Geocoder(Restaurant_Finder.this, getDefault());
+        //MarkerOptions markerOptions = new MarkerOptions();
+        //mMap.addMarker(markerOptions.title(String.valueOf(location)));
+
 
      //   googleMap.addMarker(new MarkerOptions()
      //           .position(new LatLng(37.4233438, -122.0728817))
@@ -226,6 +265,8 @@ public class Restaurant_Finder extends FragmentActivity implements OnMapReadyCal
 //
 //
 //
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(18.969132, 72.823598), 10));
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(18.969132, 72.823598), 15));
     }
+
+
 }

@@ -113,6 +113,8 @@ public class DRegister extends AppCompatActivity {
                     donateR.setRlicenc_No(License);
                     donateR.setWebsite(Website);
                     donateR.setPhone_no(Phone_no);
+                    donateR.setLal("18.969132");
+                    donateR.setLon("72.823598");
 
 
                     mAuth.createUserWithEmailAndPassword(Email,Password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {

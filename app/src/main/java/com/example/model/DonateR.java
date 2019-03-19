@@ -91,5 +91,21 @@ public class DonateR {
     }
 
     private boolean veg;
+    private String lal,lon;
 
+    public String getLal() {
+        return lal;
+    }
+
+    public void setLal(String lal) {
+        this.lal = lal;
+    }
+
+    public String getLon() {
+        return lon;
+    }
+
+    public void setLon(String lon) {
+        this.lon = lon;
+    }
 }
