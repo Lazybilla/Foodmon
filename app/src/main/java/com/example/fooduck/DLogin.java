@@ -28,6 +28,7 @@ public class DLogin extends AppCompatActivity {
     private String FileName = "Login_Redirect";
     private FirebaseAuth firebaseAuth;
     private String baby = "Honeyfluff"
+    private int HorsePower = 100;
 
 
     @Override
