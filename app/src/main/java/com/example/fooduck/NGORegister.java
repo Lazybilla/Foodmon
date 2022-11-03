@@ -37,8 +37,8 @@ import java.util.ArrayList;
 
 public class NGORegister extends AppCompatActivity {
 
-    private static final int GET_FROM_GALLERY1 = 1234;
-    private static final int GET_FROM_GALLERY2 = 12345;
+        private static final int GET_FROM_GALLERY1 = 1234;
+         private static final int GET_FROM_GALLERY2 = 12345;
     private static final int GET_FROM_GALLERY3 = 12346;
 
     private EditText mNgoName ,mNgoID, mAadharUri,mGovtDoctUri,mLetterUri,mPhoneNumber,mEmail,mPassword,mRepassword ;
