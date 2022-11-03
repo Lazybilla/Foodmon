@@ -27,6 +27,7 @@ public class DLogin extends AppCompatActivity {
     private SharedPreferences preferences;
     private String FileName = "Login_Redirect";
     private FirebaseAuth firebaseAuth;
+    private String baby = "Honeyfluff"
 
 
     @Override
